@@ -2,17 +2,18 @@ package example.com.factory
 
 import example.com.BASE_URL
 import example.com.data.model.Product
+import example.com.data.model.ProductListResponse
 import java.util.UUID
 
 object ProductsFactory {
 
-    private val productList = mutableListOf<Product>()
+    private lateinit var productResponse: ProductListResponse
 
-    fun getAllProducts() = productList
+    fun getAllProducts() = productResponse
 
     fun generateProducts() {
-        productList.addAll(
-            listOf(
+        productResponse = ProductListResponse(
+            products = listOf(
                 Product(
                     id = UUID.randomUUID().toString(),
                     image = "$BASE_URL/products/product1.jpg",
@@ -98,7 +99,7 @@ object ProductsFactory {
     }
 
     fun getProductById(id: String): Product {
-        return productList.first { it.id == id }
+        return productResponse.products.first { it.id == id }
     }
 
 }
