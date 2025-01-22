@@ -27,10 +27,21 @@ fun Route.listProducts() {
     }
 
     get("/product-info") {
-        call.parameters["productId"]?.let {productId ->
+        call.parameters["productId"]?.let { productId ->
             call.respond(
                 HttpStatusCode.OK,
                 ProductsFactory.getProductById(productId)
+            )
+        }
+    }
+
+    get("/json/product-info") {
+        call.parameters["productId"]?.let {productId ->
+            val product = ProductsFactory.getProductById(productId)
+            val response = Json.encodeToJsonElement(product)
+            call.respond(
+                HttpStatusCode.OK,
+                response
             )
         }
     }
